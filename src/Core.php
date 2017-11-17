@@ -106,9 +106,9 @@ class Core {
 			$this->plugin_dir = basename( $this->plugin_path );
 		}
 		if ( defined( 'NDS_SFI_URL' ) ) {
-			$this->plugin_dir = NDS_SFI_URL;
+			$this->plugin_url = NDS_SFI_URL;
 		} else {
-			$this->plugin_url = str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( __FILE__ ) );
+			$this->plugin_url = trailingslashit( str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( $this->plugin_dir ) ) ) . trailingslashit( $this->plugin_name );
 		}
 
 		$this->load_dependencies();
@@ -198,6 +198,16 @@ class Core {
 	}
 
 	/**
+	 * The base directory of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The base directory of the plugin.
+	 */
+	public function get_plugin_dir() {
+		return $this->plugin_dir;
+	}
+
+	/**
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
@@ -216,6 +226,16 @@ class Core {
 	 */
 	public function get_plugin_path() {
 		return $this->plugin_path;
+	}
+
+	/**
+	 * The URL of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The URL of the plugin.
+	 */
+	public function get_plugin_url() {
+		return $this->plugin_url;
 	}
 
 	/**
