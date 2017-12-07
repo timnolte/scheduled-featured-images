@@ -30,7 +30,7 @@ class Plugin {
 	/**
 	 * Instance of the class.
 	 *
-	 * @var			NDS\ScheduledFeaturedImages\Plugin
+	 * @var         NDS\ScheduledFeaturedImages\Plugin
 	 */
 	protected static $instance = null;
 
@@ -98,14 +98,14 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct( ) {
+	public function __construct() {
 
 		$this->plugin_path = trailingslashit( Common\Util::dirname_r( __FILE__, 2 ) );
 		$this->plugin_dir = basename( $this->plugin_path );
 		$this->plugin_url = trailingslashit( str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( $this->plugin_dir ) ) ) . trailingslashit( self::NAME );
 
 		$this->define_constants();
-		
+
 		$this->loader = new Common\Loader( $this );
 
 	}
@@ -146,7 +146,7 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @param		 Common\I18n	$plugin_i18n		Instance of the NDS\ScheduledFeaturedImages\Common\I18n class that manages translation hooks.
+	 * @param        Common\I18n $plugin_i18n        Instance of the NDS\ScheduledFeaturedImages\Common\I18n class that manages translation hooks.
 	 */
 	private function set_locale( $plugin_i18n ) {
 
@@ -160,7 +160,7 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @param		 Admin\Handler	$plugin_admin		Instance of the NDS\ScheduledFeaturedImages\Admin\Handler class that manages admin-related hooks.
+	 * @param        Admin\Handler $plugin_admin       Instance of the NDS\ScheduledFeaturedImages\Admin\Handler class that manages admin-related hooks.
 	 */
 	private function define_admin_hooks( $plugin_admin ) {
 
@@ -175,7 +175,7 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @param		 Frontend\Handler	$plugin_frontend		Instance of the NDS\ScheduledFeaturedImages\Frontend\Handler class that manages public-facing related hooks.
+	 * @param        Frontend\Handler $plugin_frontend        Instance of the NDS\ScheduledFeaturedImages\Frontend\Handler class that manages public-facing related hooks.
 	 */
 	private function define_frontend_hooks( $plugin_frontend ) {
 
@@ -194,7 +194,7 @@ class Plugin {
 		$this->set_locale( new Common\I18n( $this ) );
 		$this->define_admin_hooks( new Admin\Handler( $this ) );
 		$this->define_frontend_hooks( new Frontend\Handler( $this ) );
-		
+
 		$this->loader->run();
 
 	}

@@ -42,7 +42,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test plugin name/slug method.
-	 * 
+	 *
 	 * @group PluginAttributes
 	 */
 	public function testPluginName() {
@@ -54,7 +54,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test plugin version method.
-	 * 
+	 *
 	 * @group PluginAttributes
 	 */
 	public function testPluginVersion() {
@@ -66,7 +66,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test plugin version GLOBAL is defined.
-	 * 
+	 *
 	 * @group PluginGlobalAttributes
 	 */
 	public function testPluginVersionGlobal() {
@@ -78,7 +78,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test plugin path method.
-	 * 
+	 *
 	 * @group PluginAttributes
 	 */
 	public function testPluginPath() {
@@ -93,7 +93,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test plugin path GLOBAL is defined.
-	 * 
+	 *
 	 * @group PluginGlobalAttributes
 	 */
 	public function testPluginPathGlobal() {
@@ -105,7 +105,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test plugin base directory method.
-	 * 
+	 *
 	 * @group PluginAttributes
 	 */
 	public function testPluginDirectory() {
@@ -120,7 +120,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test plugin base directory GLOBAL is defined.
-	 * 
+	 *
 	 * @group PluginGlobalAttributes
 	 */
 	public function testPluginDirectoryGlobal() {
@@ -132,7 +132,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test plugin URL method.
-	 * 
+	 *
 	 * @group PluginAttributes
 	 */
 	public function testPluginUrl() {
@@ -148,7 +148,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test plugin URL GLOBAL is defined.
-	 * 
+	 *
 	 * @group PluginGlobalAttributes
 	 */
 	public function testPluginUrlGlobal() {

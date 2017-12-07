@@ -48,10 +48,12 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 register_activation_hook( __FILE__, array( __NAMESPACE__ . '\Common\Activator', 'activate' ) );
 register_deactivation_hook( __FILE__, array( __NAMESPACE__ . '\Common\Deactivator', 'deactivate' ) );
 
-add_action( 'init', function () {
+add_action(
+	'init', function () {
 
-	$plugin = new Plugin();
-	$plugin->init();
-	return $plugin->get_instance();
+		$plugin = new Plugin();
+		$plugin->init();
+		return $plugin->get_instance();
 
-} );
+	}
+);
