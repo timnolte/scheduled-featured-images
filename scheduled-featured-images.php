@@ -51,7 +51,7 @@ register_deactivation_hook( __FILE__, array( __NAMESPACE__ . '\Common\Deactivato
 add_action( 'init', function () {
 
 	$plugin = new Plugin();
-	$plugin->run();
+	$plugin->init();
 	return $plugin->get_instance();
 
 } );

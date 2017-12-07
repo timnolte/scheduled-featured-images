@@ -105,10 +105,8 @@ class Plugin {
 		$this->plugin_url = trailingslashit( str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( $this->plugin_dir ) ) ) . trailingslashit( self::NAME );
 
 		$this->define_constants();
-		$this->load_dependencies( new Common\Loader( $this ) );
-		$this->set_locale( new Common\I18n( $this ) );
-		$this->define_admin_hooks( new Admin\Handler( $this ) );
-		$this->define_frontend_hooks( new Frontend\Handler( $this ) );
+		
+		$this->loader = new Common\Loader( $this );
 
 	}
 
@@ -137,21 +135,6 @@ class Plugin {
 		if ( ! defined( 'NDS_SFI_URL' ) ) {
 			define( 'NDS_SFI_URL', $this->plugin_url );
 		}
-
-	}
-
-	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Create an instance of the NDS\ScheduledFeaturedImages\Common\Loader which will be used to register the hooks
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function load_dependencies( $loader ) {
-
-		$this->loader = $loader;
 
 	}
 
@@ -206,8 +189,12 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function run() {
+	public function init() {
 
+		$this->set_locale( new Common\I18n( $this ) );
+		$this->define_admin_hooks( new Admin\Handler( $this ) );
+		$this->define_frontend_hooks( new Frontend\Handler( $this ) );
+		
 		$this->loader->run();
 
 	}
