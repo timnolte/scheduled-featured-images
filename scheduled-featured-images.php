@@ -28,7 +28,9 @@ namespace NDS\ScheduledFeaturedImages;
 
 // Due to namespace usage and composer package requirements we require PHP >= 5.5.0.
 if ( ! function_exists( 'version_compare' ) || version_compare( PHP_VERSION, '5.5.0', '<' ) ) {
+
 	exit;
+
 }
 
 // If this file is called directly, abort.
@@ -38,23 +40,18 @@ defined( 'WPINC' ) || die;
  * Check for and load the PSR-4 autoloader, built by Composer.
  */
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+
 	require_once( __DIR__ . '/vendor/autoload.php' );
+
 }
 
-use NDS\ScheduledFeaturedImages\Common;
+register_activation_hook( __FILE__, array( __NAMESPACE__ . '\Common\Activator', 'activate' ) );
+register_deactivation_hook( __FILE__, array( __NAMESPACE__ . '\Common\Deactivator', 'deactivate' ) );
 
-register_activation_hook( __FILE__, array( __NAMESPACE__ . 'Common\Activator', 'activate' ) );
-register_deactivation_hook( __FILE__, array( __NAMESPACE__ . 'Common\Deactivator', 'deactivate' ) );
+add_action( 'init', function () {
 
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
- */
+	$plugin = new Plugin();
+	$plugin->run();
+	return $plugin->get_instance();
 
-$plugin = new Core();
-$plugin->run();
+} );

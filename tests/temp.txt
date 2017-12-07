@@ -1,0 +1,41 @@
+
+	/**
+	 * Test that the plugin i18n actions are registered after plugin run.
+	 */
+	public function testPluginI18nActionsLoaded() {
+
+		global $wp_filter;
+		error_log( print_r( $wp_filter, true ) );
+
+		$plugin_i18n = new Common\I18n( $this->plugin );
+		$i18n_class_name = get_class( $plugin_i18n );
+
+		$this->assertThat( has_action( 'plugins_loaded' ), $this->equalTo( true ), "Environment should have 'plugins_loaded' hooks registered." );
+// 		$this->assertThat( has_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) ), $this->equalTo( 10 ), "Plugin action $i18n_class_name::load_plugin_textdomain should be registered." );
+	}
+
+	/**
+	 * Test that the plugin admin actions are registered after plugin run.
+	 */
+	public function testPluginAdminActionsLoaded() {
+
+		$plugin_admin = new Admin\Handler( $this->plugin );
+		$admin_class_name = get_class( $plugin_admin );
+
+		$this->assertThat( has_action( 'admin_enqueue_scripts' ), $this->equalTo( true ), "Environment should have 'admin_enqueue_scripts' hooks registered." );
+		// $this->assertThat( has_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_styles' ) ), $this->equalTo( 10 ), "Plugin action $admin_class_name::enqueue_styles should be registered." );
+		// $this->assertThat( has_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_scripts' ) ), $this->equalTo( 10 ), "Plugin action $admin_class_name::enqueue_scripts should be registered." );
+	}
+
+	/**
+	 * Test that the plugin frontend actions are registered after plugin run.
+	 */
+	public function testPluginFrontendActionsLoaded() {
+
+		$plugin_frontend = new Frontend\Handler( $this->plugin );
+		$frontend_class_name = get_class( $plugin_frontend );
+
+		$this->assertThat( has_action( 'wp_enqueue_scripts' ), $this->equalTo( true ), "Environment should have 'wp_enqueue_scripts' hooks registered." );
+		// $this->assertThat( has_action( 'wp_enqueue_scripts', array( $plugin_frontend, 'enqueue_styles' ) ), $this->equalTo( 10 ), "Plugin action $frontend_class_name::enqueue_styles should be registered." );
+		// $this->assertThat( has_action( 'wp_enqueue_scripts', array( $plugin_frontend, 'enqueue_scripts' ) ), $this->equalTo( 10 ), "Plugin action $frontend_class_name::enqueue_scripts should be registered." );
+	}

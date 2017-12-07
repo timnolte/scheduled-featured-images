@@ -5,6 +5,17 @@
  * @package NDS\ScheduledFeaturedImages
  */
 
+// if ( !defined( 'WP_DEBUG_DISPLAY' ) ) {
+// 	define( 'WP_DEBUG_DISPLAY', false );
+// } else {
+// 	$GLOBAL['WP_DEBUG_DISPLAY'] = false;
+// }
+// if ( !defined( 'WP_DEBUG_LOG' ) ) {
+// 	define( 'WP_DEBUG_LOG', true );
+// } else {
+// 	$GLOBAL['WP_DEBUG_LOG'] = true;
+// }
+
 /**
  * Check for and load the PSR-4 autoloader, built by Composer.
  */

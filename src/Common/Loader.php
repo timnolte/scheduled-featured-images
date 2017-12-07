@@ -25,6 +25,13 @@ namespace NDS\ScheduledFeaturedImages\Common;
 class Loader {
 
 	/**
+	 * Instance of the NDS\ScheduledFeaturedImages\Core class.
+	 *
+	 * @var     NDS\ScheduledFeaturedImages\Core
+	 */
+	protected static $plugin = null;
+
+	/**
 	 * The array of actions registered with WordPress.
 	 *
 	 * @since    1.0.0
@@ -46,8 +53,13 @@ class Loader {
 	 * Initialize the collections used to maintain the actions and filters.
 	 *
 	 * @since    1.0.0
+	 * @param    string $plugin     An instance of the Core plugin class.
 	 */
-	public function __construct() {
+	public function __construct( $plugin ) {
+
+		if ( null == self::$plugin ) {
+			self::$plugin = $plugin;
+		}
 
 		$this->actions = array();
 		$this->filters = array();
@@ -65,7 +77,9 @@ class Loader {
 	 * @param    int    $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
 	public function add_action( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
+
 		$this->actions = $this->add( $this->actions, $hook, $component, $callback, $priority, $accepted_args );
+
 	}
 
 	/**
@@ -79,7 +93,9 @@ class Loader {
 	 * @param    int    $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
 	public function add_filter( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
+
 		$this->filters = $this->add( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
+
 	}
 
 	/**

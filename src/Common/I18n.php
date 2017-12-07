@@ -22,16 +22,39 @@ namespace NDS\ScheduledFeaturedImages\Common;
 class I18n {
 
 	/**
+	 * Instance of the NDS\ScheduledFeaturedImages\Core class.
+	 *
+	 * @var     NDS\ScheduledFeaturedImages\Core
+	 */
+	protected static $plugin = null;
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since    1.0.0
+	 * @param    string $plugin     An instance of the Core plugin class.
+	 */
+	public function __construct( $plugin ) {
+
+		if ( null == self::$plugin ) {
+			self::$plugin = $plugin;
+		}
+
+	}
+
+	/**
 	 * Load the plugin text domain for translation.
 	 *
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
 
+		$locale = apply_filters( 'plugin_locale', get_locale(), self::$plugin->get_plugin_name() );
+
 		load_plugin_textdomain(
-			'scheduled-featured-images',
+			self::$plugin->get_plugin_name(),
 			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+			self::$plugin->get_plugin_path() . 'languages/'
 		);
 
 	}
