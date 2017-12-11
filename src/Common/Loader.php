@@ -25,9 +25,9 @@ namespace NDS\ScheduledFeaturedImages\Common;
 class Loader {
 
 	/**
-	 * Instance of the NDS\ScheduledFeaturedImages\Core class.
+	 * Instance of the NDS\ScheduledFeaturedImages\Plugin class.
 	 *
-	 * @var     NDS\ScheduledFeaturedImages\Core
+	 * @var     NDS\ScheduledFeaturedImages\Plugin
 	 */
 	protected static $plugin = null;
 
@@ -53,7 +53,7 @@ class Loader {
 	 * Initialize the collections used to maintain the actions and filters.
 	 *
 	 * @since    1.0.0
-	 * @param    string $plugin     An instance of the Core plugin class.
+	 * @param    string $plugin     An instance of the NDS\ScheduledFeaturedImages\Plugin class.
 	 */
 	public function __construct( $plugin ) {
 

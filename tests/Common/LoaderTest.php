@@ -24,7 +24,7 @@ class LoaderTest extends WP_UnitTestCase {
 
 		parent::setUp();
 
-		$this->loader = new Loader( ScheduledFeaturedImages\Plugin::get_instance() );
+		$this->loader = new Loader( ScheduledFeaturedImages\Plugin::get_instance( NDS_SFI_PLUGIN_FILE ) );
 
 	}
 
@@ -42,9 +42,9 @@ class LoaderTest extends WP_UnitTestCase {
 	/**
 	 * Test plugin loader.
 	 */
-	public function testLoader() {
+	public function testLoaderIsValidInstance() {
 
-		$this->assertTrue( true );
+		$this->assertInstanceOf( Loader::class, $this->loader) ;
 
 	}
 

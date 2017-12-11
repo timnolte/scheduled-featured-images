@@ -23,9 +23,11 @@ function setup_debugging( $should_run = false ) {
 
 }
 
-/**
- * Check for and load the PSR-4 autoloader, built by Composer.
- */
+if ( ! defined( 'NDS_SFI_PLUGIN_FILE' ) ) {
+	define( 'NDS_SFI_PLUGIN_FILE', dirname( dirname( __FILE__ ) ) . '/scheduled-featured-images.php' );
+}
+
+// Check for and load the PSR-4 autoloader, built by Composer.
 if ( file_exists( dirname( __DIR__ ) . '/vendor/autoload.php' ) ) {
 	require_once( dirname( __DIR__ ) . '/vendor/autoload.php' );
 }
@@ -42,7 +44,7 @@ require_once $_tests_dir . '/includes/functions.php';
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( dirname( __FILE__ ) ) . '/scheduled-featured-images.php';
+	require NDS_SFI_PLUGIN_FILE;
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 

@@ -30,9 +30,10 @@ class Plugin {
 	/**
 	 * Instance of the class.
 	 *
-	 * @var         NDS\ScheduledFeaturedImages\Plugin
+	 * @since			1.0.0
+	 * @var       NDS\ScheduledFeaturedImages\Plugin
 	 */
-	protected static $instance = null;
+	protected static $_instance = null;
 
 	/**
 	 * The unique identifier of this plugin.
@@ -53,29 +54,38 @@ class Plugin {
 	const VERSION = '1.0.0';
 
 	/**
+	 * The plugin full base filename & path.
+	 *
+	 * @since     1.0.0
+	 * @access  	protected
+	 * @var       string          $plugin_file        The plugin full base filename & path.
+	 */
+	protected $plugin_file;
+
+	/**
 	 * The plugin system path.
 	 *
-	 * @since       1.0.0
-	 * @access  protected
-	 * @var         string          $plugin_path        The plugin system path.
+	 * @since			1.0.0
+	 * @access		protected
+	 * @var				string          $plugin_path        The plugin system path.
 	 */
 	protected $plugin_path;
 
 	/**
 	 * The plugin base directory.
 	 *
-	 * @since       1.0.0
-	 * @access  protected
-	 * @var         string          $plugin_dir     The plugin base directory.
+	 * @since     1.0.0
+	 * @access		protected
+	 * @var       string          $plugin_dir     The plugin base directory.
 	 */
 	protected $plugin_dir;
 
 	/**
 	 * The plugin URL.
 	 *
-	 * @since       1.0.0
-	 * @access  protected
-	 * @var         string          $plugin_url     The plugin URL.
+	 * @since     1.0.0
+	 * @access		protected
+	 * @var       string          $plugin_url     The plugin URL.
 	 */
 	protected $plugin_url;
 
@@ -98,16 +108,35 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct() {
+	public function __construct( $file = __FILE__ ) {
 
-		$this->plugin_path = trailingslashit( Common\Util::dirname_r( __FILE__, 2 ) );
+		$this->plugin_file = $file;
+		$this->plugin_path = trailingslashit( dirname( $this->plugin_file ) );
 		$this->plugin_dir = basename( $this->plugin_path );
-		$this->plugin_url = trailingslashit( str_replace( array( 'http:', 'https:' ), '', plugin_dir_url( $this->plugin_dir ) ) ) . trailingslashit( self::NAME );
+		$this->plugin_url = trailingslashit( str_replace( array( 'http:', 'https:' ), '', trailingslashit( plugins_url() ) . $this->plugin_dir ) );
 
 		$this->define_constants();
 
 		$this->loader = new Common\Loader( $this );
 
+	}
+
+	/**
+	 * Cloning is forbidden.
+	 *
+	 * @since		1.0.0
+	 */
+	public function __clone() {
+		wp_die( 'Cloning of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array( 'response' => 403, 'back_link' => true ) );
+	}
+
+	/**
+	 * Unserializing instances of this class is forbidden.
+	 *
+	 * @since		1.0.0
+	 */
+	public function __wakeup() {
+		wp_die( 'Unserializing of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array( 'response' => 403, 'back_link' => true ) );
 	}
 
 	/**
@@ -122,6 +151,10 @@ class Plugin {
 
 		if ( ! defined( 'NDS_SFI_VERSION' ) ) {
 			define( 'NDS_SFI_VERSION', self::VERSION );
+		}
+
+		if ( ! defined( 'NDS_SFI_PLUGIN_FILE' ) ) {
+			define( 'NDS_SFI_PLUGIN_FILE', $this->plugin_file );
 		}
 
 		if ( ! defined( 'NDS_SFI_PATH' ) ) {
@@ -185,32 +218,38 @@ class Plugin {
 	}
 
 	/**
+	 * Gets instance of class.
+	 *
+	 * @since			1.0.0
+	 * @static
+	 * @param			string		$file		The file from which the class is being instantiated.
+	 * @return    NDS\ScheduledFeaturedImages\Plugin        Instance of the class.
+	 */
+	public static function get_instance( $file = __FILE__ ) {
+
+		if ( null == self::$_instance ) {
+			self::$_instance = new self( $file );
+		}
+
+		return self::$_instance;
+
+	}
+
+	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
 	 * @since    1.0.0
 	 */
 	public function init() {
 
+		register_activation_hook( $this->plugin_file, array( __NAMESPACE__ . '\Common\Activator', 'activate' ) );
+		register_deactivation_hook( $this->plugin_file, array( __NAMESPACE__ . '\Common\Deactivator', 'deactivate' ) );
+
 		$this->set_locale( new Common\I18n( $this ) );
 		$this->define_admin_hooks( new Admin\Handler( $this ) );
 		$this->define_frontend_hooks( new Frontend\Handler( $this ) );
 
 		$this->loader->run();
-
-	}
-
-	/**
-	 * Gets instance of class.
-	 *
-	 * @return      NDS\ScheduledFeaturedImages\Plugin        Instance of the class.
-	 */
-	public static function get_instance() {
-
-		if ( null == self::$instance ) {
-			self::$instance = new self;
-		}
-
-		return self::$instance;
 
 	}
 
@@ -223,6 +262,18 @@ class Plugin {
 	public function get_plugin_dir() {
 
 		return $this->plugin_dir;
+
+	}
+
+	/**
+	 * The main file path of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The main file path of the plugin.
+	 */
+	public function get_plugin_file() {
+
+		return $this->plugin_file;
 
 	}
 

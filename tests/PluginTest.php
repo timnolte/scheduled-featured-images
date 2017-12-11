@@ -23,9 +23,7 @@ class PluginTest extends WP_UnitTestCase {
 
 		parent::setUp();
 
-		$this->plugin = new Plugin();
-
-		do_action( 'init' );
+		$this->plugin = Plugin::get_instance( NDS_SFI_PLUGIN_FILE );
 
 	}
 
@@ -73,6 +71,33 @@ class PluginTest extends WP_UnitTestCase {
 
 		$this->assertNotEmpty( NDS_SFI_VERSION, 'Global NDS_SFI_VERSION should not be empty after plugin initialization.' );
 		$this->assertSame( NDS_SFI_VERSION, $this->plugin->get_version() );
+
+	}
+
+	/**
+	 * Test plugin main file path method.
+	 *
+	 * @group PluginAttributes
+	 */
+	public function testPluginFile() {
+
+		$this->assertNotEmpty( $this->plugin->get_plugin_file(), 'Plugin should have a default file path.' );
+		$this->assertThat( $this->plugin->get_plugin_file(), $this->stringContains( Plugin::NAME . '/' . Plugin::NAME . '.php' ) );
+		$this->assertThat( $this->plugin->get_plugin_file(), $this->logicalNot( $this->stringContains( 'src' ) ) );
+		$this->assertThat( $this->plugin->get_plugin_file(), $this->logicalNot( $this->stringContains( 'test' ) ) );
+		$this->assertSame( trailingslashit( Common\Util::dirname_r( __FILE__, 2 ) ) . Plugin::NAME . '.php', $this->plugin->get_plugin_file() );
+
+	}
+
+	/**
+	 * Test plugin main file path GLOBAL is defined.
+	 *
+	 * @group PluginGlobalAttributes
+	 */
+	public function testPluginFileGlobal() {
+
+		$this->assertNotEmpty( NDS_SFI_PLUGIN_FILE, 'Global NDS_SFI_PLUGIN_FILE should not be empty after plugin initialization.' );
+		$this->assertSame( NDS_SFI_PLUGIN_FILE, $this->plugin->get_plugin_file() );
 
 	}
 
@@ -137,12 +162,15 @@ class PluginTest extends WP_UnitTestCase {
 	 */
 	public function testPluginUrl() {
 
+		$standard_plugin_uri = 'wp-content/plugins/' . Plugin::NAME . '/';
+		// Plugin should be written such that the URL is protool agnostic so as not to cause mixed content warnings.
+		$standard_plugin_url = trailingslashit( str_replace( array( 'http:', 'https:' ), '', site_url( '/' ) . $standard_plugin_uri ) );
+
 		$this->assertNotEmpty( $this->plugin->get_plugin_url(), 'Plugin should have a default URL.' );
-		$this->assertThat( $this->plugin->get_plugin_url(), $this->stringContains( Plugin::NAME ) );
-		$this->assertThat( $this->plugin->get_plugin_url(), $this->stringContains( '/wp-content/plugins/' ) );
+		$this->assertThat( $this->plugin->get_plugin_url(), $this->stringContains( $standard_plugin_uri ) );
 		$this->assertThat( $this->plugin->get_plugin_url(), $this->logicalNot( $this->stringContains( 'src' ) ) );
 		$this->assertThat( $this->plugin->get_plugin_url(), $this->logicalNot( $this->stringContains( 'test' ) ) );
-		$this->assertSame( '//example.org/wp-content/plugins/scheduled-featured-images/', $this->plugin->get_plugin_url() );
+		$this->assertSame( $standard_plugin_url, $this->plugin->get_plugin_url() );
 
 	}
 
