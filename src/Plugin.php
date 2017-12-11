@@ -30,7 +30,9 @@ class Plugin {
 	/**
 	 * Instance of the class.
 	 *
-	 * @since			1.0.0
+	 * @since     1.0.0
+	 * @static
+	 * @access    protected
 	 * @var       NDS\ScheduledFeaturedImages\Plugin
 	 */
 	protected static $_instance = null;
@@ -38,18 +40,18 @@ class Plugin {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    NAME    The string used to uniquely identify this plugin.
+	 * @since     1.0.0
+	 * @const
+	 * @var       string    NAME    The string used to uniquely identify this plugin.
 	 */
 	const NAME = 'scheduled-featured-images';
 
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string         VERSION      The current version of the plugin.
+	 * @since     1.0.0
+	 * @const
+	 * @var       string    VERSION   The current version of the plugin.
 	 */
 	const VERSION = '1.0.0';
 
@@ -57,17 +59,17 @@ class Plugin {
 	 * The plugin full base filename & path.
 	 *
 	 * @since     1.0.0
-	 * @access  	protected
-	 * @var       string          $plugin_file        The plugin full base filename & path.
+	 * @access    protected
+	 * @var       string    $plugin_file    The plugin full base filename & path.
 	 */
 	protected $plugin_file;
 
 	/**
 	 * The plugin system path.
 	 *
-	 * @since			1.0.0
-	 * @access		protected
-	 * @var				string          $plugin_path        The plugin system path.
+	 * @since     1.0.0
+	 * @access    protected
+	 * @var       string    $plugin_path    The plugin system path.
 	 */
 	protected $plugin_path;
 
@@ -75,8 +77,8 @@ class Plugin {
 	 * The plugin base directory.
 	 *
 	 * @since     1.0.0
-	 * @access		protected
-	 * @var       string          $plugin_dir     The plugin base directory.
+	 * @access    protected
+	 * @var       string    $plugin_dir   The plugin base directory.
 	 */
 	protected $plugin_dir;
 
@@ -84,8 +86,8 @@ class Plugin {
 	 * The plugin URL.
 	 *
 	 * @since     1.0.0
-	 * @access		protected
-	 * @var       string          $plugin_url     The plugin URL.
+	 * @access    protected
+	 * @var       string    $plugin_url   The plugin URL.
 	 */
 	protected $plugin_url;
 
@@ -93,9 +95,9 @@ class Plugin {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      NDS\ScheduledFeaturedImages\Common\Loader      $loader     Maintains and registers all hooks for the plugin.
+	 * @since     1.0.0
+	 * @access    protected
+	 * @var       NDS\ScheduledFeaturedImages\Common\Loader    $loader   Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -106,7 +108,8 @@ class Plugin {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since     1.0.0
+	 * @param     string $file   The file from which the class is being instantiated.
 	 */
 	public function __construct( $file = __FILE__ ) {
 
@@ -124,19 +127,29 @@ class Plugin {
 	/**
 	 * Cloning is forbidden.
 	 *
-	 * @since		1.0.0
+	 * @since   1.0.0
 	 */
 	public function __clone() {
-		wp_die( 'Cloning of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array( 'response' => 403, 'back_link' => true ) );
+		wp_die(
+			'Cloning of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array(
+				'response' => 403,
+				'back_link' => true,
+			)
+		);
 	}
 
 	/**
 	 * Unserializing instances of this class is forbidden.
 	 *
-	 * @since		1.0.0
+	 * @since   1.0.0
 	 */
 	public function __wakeup() {
-		wp_die( 'Unserializing of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array( 'response' => 403, 'back_link' => true ) );
+		wp_die(
+			'Unserializing of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array(
+				'response' => 403,
+				'back_link' => true,
+			)
+		);
 	}
 
 	/**
@@ -177,9 +190,9 @@ class Plugin {
 	 * Uses the NDS\ScheduledFeaturedImages\Common\I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @param        Common\I18n $plugin_i18n        Instance of the NDS\ScheduledFeaturedImages\Common\I18n class that manages translation hooks.
+	 * @since     1.0.0
+	 * @access    private
+	 * @param     Common\I18n $plugin_i18n    Instance of the NDS\ScheduledFeaturedImages\Common\I18n class that manages translation hooks.
 	 */
 	private function set_locale( $plugin_i18n ) {
 
@@ -191,9 +204,9 @@ class Plugin {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @param        Admin\Handler $plugin_admin       Instance of the NDS\ScheduledFeaturedImages\Admin\Handler class that manages admin-related hooks.
+	 * @since     1.0.0
+	 * @access    private
+	 * @param     Admin\Handler $plugin_admin   Instance of the NDS\ScheduledFeaturedImages\Admin\Handler class that manages admin-related hooks.
 	 */
 	private function define_admin_hooks( $plugin_admin ) {
 
@@ -206,9 +219,9 @@ class Plugin {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @param        Frontend\Handler $plugin_frontend        Instance of the NDS\ScheduledFeaturedImages\Frontend\Handler class that manages public-facing related hooks.
+	 * @since     1.0.0
+	 * @access    private
+	 * @param     Frontend\Handler $plugin_frontend   Instance of the NDS\ScheduledFeaturedImages\Frontend\Handler class that manages public-facing related hooks.
 	 */
 	private function define_frontend_hooks( $plugin_frontend ) {
 
@@ -220,10 +233,10 @@ class Plugin {
 	/**
 	 * Gets instance of class.
 	 *
-	 * @since			1.0.0
+	 * @since     1.0.0
 	 * @static
-	 * @param			string		$file		The file from which the class is being instantiated.
-	 * @return    NDS\ScheduledFeaturedImages\Plugin        Instance of the class.
+	 * @param     string $file    The file from which the class is being instantiated.
+	 * @return    NDS\ScheduledFeaturedImages\Plugin    Instance of the class.
 	 */
 	public static function get_instance( $file = __FILE__ ) {
 

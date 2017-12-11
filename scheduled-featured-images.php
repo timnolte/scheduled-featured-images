@@ -43,7 +43,6 @@ if ( ! defined( 'PHP_VERSION' ) || ! function_exists( 'version_compare' ) || ver
 		add_action( 'admin_notices', '_sfi_php_version_error' );
 
 	}
-
 } else {
 
 	if ( ! defined( 'NDS_SFI_PLUGIN_FILE' ) ) {
@@ -66,8 +65,8 @@ if ( ! defined( 'PHP_VERSION' ) || ! function_exists( 'version_compare' ) || ver
 
 /**
  * Admin notice for incompatible versions of PHP.
- * 
- * @since		1.0.0
+ *
+ * @since       1.0.0
  */
 function _sfi_php_version_error() {
 
@@ -78,8 +77,8 @@ function _sfi_php_version_error() {
 /**
  * String describing the minimum PHP version.
  *
- * @since		1.0.0
- * @return 	string 	The localized PHP version requirement message text.
+ * @since       1.0.0
+ * @return  string  The localized PHP version requirement message text.
  */
 function _sfi_php_version_text() {
 
@@ -89,9 +88,9 @@ function _sfi_php_version_text() {
 
 /**
  * Intializes the main plugin global instance.
- * 
- * @since		1.0.0
- * @return	NDS\ScheduledFeaturedImages\Plugin	$plugin		The single NDS\ScheduledFeaturedImages\Plugin instance.
+ *
+ * @since       1.0.0
+ * @return  NDS\ScheduledFeaturedImages\Plugin  $plugin     The single NDS\ScheduledFeaturedImages\Plugin instance.
  */
 function _sfi_init() {
 

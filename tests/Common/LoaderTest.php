@@ -44,7 +44,7 @@ class LoaderTest extends WP_UnitTestCase {
 	 */
 	public function testLoaderIsValidInstance() {
 
-		$this->assertInstanceOf( Loader::class, $this->loader) ;
+		$this->assertInstanceOf( Loader::class, $this->loader );
 
 	}
 
