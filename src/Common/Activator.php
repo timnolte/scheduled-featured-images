@@ -11,6 +11,8 @@
 
 namespace NDS\ScheduledFeaturedImages\Common;
 
+use NDS\ScheduledFeaturedImages\Models\BlogsModel;
+
 /**
  * This class defines all code necessary to run during the plugin's activation.
  *
@@ -29,11 +31,11 @@ class Activator {
 	 *
 	 * @param    boolean $network_wide    True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
 	 */
-	public static function activate( $network_wide ) {
+	public static function activate( $network_wide = false ) {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			if ( $network_wide ) {
 					// Get all blog ids.
-					$blog_ids = self::get_blog_ids();
+					$blog_ids = (new BlogsModel())->get_blog_ids();
 
 				foreach ( $blog_ids as $blog_id ) {
 					switch_to_blog( $blog_id );
@@ -65,4 +67,15 @@ class Activator {
 		self::single_activate();
 		restore_current_blog();
 	}
+
+	/**
+	 * Fired for each blog when the plugin is activated.
+	 *
+	 * @since    1.0.0
+	 */
+	private static function single_activate() {
+		// TODO: Define activation functionality here.
+		null;
+	}
+
 }

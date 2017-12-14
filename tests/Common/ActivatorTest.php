@@ -17,6 +17,28 @@ use WP_UnitTestCase;
 class ActivatorTest extends WP_UnitTestCase {
 
 	/**
+	 * Test case setup method.
+	 */
+	public function setUp() {
+
+		parent::setUp();
+
+		$this->activator = Activator::activate();
+
+	}
+
+	/**
+	 * Test case cleanup method.
+	 */
+	public function tearDown() {
+
+		parent::tearDown();
+
+		$this->activator = null;
+
+	}
+
+	/**
 	 * A single example test.
 	 */
 	function test_sample() {

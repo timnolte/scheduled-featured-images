@@ -14,9 +14,10 @@
 
 namespace NDS\ScheduledFeaturedImages;
 
-use NDS\ScheduledFeaturedImages\Common;
-use NDS\ScheduledFeaturedImages\Admin;
-use NDS\ScheduledFeaturedImages\Frontend;
+use NDS\ScheduledFeaturedImages\Common\I18n;
+use NDS\ScheduledFeaturedImages\Common\Loader;
+use NDS\ScheduledFeaturedImages\Admin\Handler as AdminHandler;
+use NDS\ScheduledFeaturedImages\Frontend\Handler as FrontendHandler;
 
 
 /**
@@ -120,7 +121,7 @@ class Plugin {
 
 		$this->define_constants();
 
-		$this->loader = new Common\Loader( $this );
+		$this->loader = new Loader( $this );
 
 	}
 
@@ -192,7 +193,7 @@ class Plugin {
 	 *
 	 * @since     1.0.0
 	 * @access    private
-	 * @param     Common\I18n $plugin_i18n    Instance of the NDS\ScheduledFeaturedImages\Common\I18n class that manages translation hooks.
+	 * @param     NDS\ScheduledFeaturedImages\Common\I18n $plugin_i18n    Instance of the NDS\ScheduledFeaturedImages\Common\I18n class that manages translation hooks.
 	 */
 	private function set_locale( $plugin_i18n ) {
 
@@ -206,12 +207,12 @@ class Plugin {
 	 *
 	 * @since     1.0.0
 	 * @access    private
-	 * @param     Admin\Handler $plugin_admin   Instance of the NDS\ScheduledFeaturedImages\Admin\Handler class that manages admin-related hooks.
+	 * @param     NDS\ScheduledFeaturedImages\Admin\Handler $admin_handler   Instance of the NDS\ScheduledFeaturedImages\Admin\Handler class that manages admin-related hooks.
 	 */
-	private function define_admin_hooks( $plugin_admin ) {
+	private function define_admin_hooks( $admin_handler ) {
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $admin_handler, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $admin_handler, 'enqueue_scripts' );
 
 	}
 
@@ -221,12 +222,12 @@ class Plugin {
 	 *
 	 * @since     1.0.0
 	 * @access    private
-	 * @param     Frontend\Handler $plugin_frontend   Instance of the NDS\ScheduledFeaturedImages\Frontend\Handler class that manages public-facing related hooks.
+	 * @param     NDS\ScheduledFeaturedImages\Frontend\Handler $frontend_handler   Instance of the NDS\ScheduledFeaturedImages\Frontend\Handler class that manages public-facing related hooks.
 	 */
-	private function define_frontend_hooks( $plugin_frontend ) {
+	private function define_frontend_hooks( $frontend_handler ) {
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $frontend_handler, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $frontend_handler, 'enqueue_scripts' );
 
 	}
 
@@ -258,9 +259,9 @@ class Plugin {
 		register_activation_hook( $this->plugin_file, array( __NAMESPACE__ . '\Common\Activator', 'activate' ) );
 		register_deactivation_hook( $this->plugin_file, array( __NAMESPACE__ . '\Common\Deactivator', 'deactivate' ) );
 
-		$this->set_locale( new Common\I18n( $this ) );
-		$this->define_admin_hooks( new Admin\Handler( $this ) );
-		$this->define_frontend_hooks( new Frontend\Handler( $this ) );
+		$this->set_locale( new I18n( $this ) );
+		$this->define_admin_hooks( new AdminHandler( $this ) );
+		$this->define_frontend_hooks( new FrontendHandler( $this ) );
 
 		$this->loader->run();
 

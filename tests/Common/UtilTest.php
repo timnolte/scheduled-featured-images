@@ -18,6 +18,8 @@ class UtilTest extends WP_UnitTestCase {
 
 	/**
 	 * Test dirname_r() fallback method when using PHP versions prior to 7.x..
+	 *
+	 * @group PluginUtilityMethods
 	 */
 	function testDirnameR() {
 		$curr_path = explode( '/', __FILE__ );
