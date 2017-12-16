@@ -35,15 +35,10 @@ class BlogsModel {
 	 * Get the list of blog ids for network installs.
 	 *
 	 * @since       1.0.0
-	 * return       array       Returns an array of blog ids. When not a multi-site install returns an empty array.
+	 * @param       \WPDB       $wpdb      An instance of the WordPress core wpdb class, except for unit tests this should be the GLOBAL instance.
+	 * @return      array       Returns an array of blog ids.
 	 */
-	public function get_blog_ids() {
-		global $wpdb;
-
-		if ( count( $wpdb->blogs ) === 0 ) {
-			return [];
-		}
-
+	public function get_ids( $wpdb ) {
 		return $wpdb->get_col( "SELECT blog_id FROM {$wpdb->blogs}" );
 	}
 

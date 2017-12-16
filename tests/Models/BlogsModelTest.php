@@ -9,6 +9,7 @@
 namespace NDS\ScheduledFeaturedImages\Models;
 
 use PHPUnit\Framework\TestCase;
+use Mockery;
 use WP_UnitTestCase;
 
 /**
@@ -23,7 +24,9 @@ class BlogsModelTest extends WP_UnitTestCase {
 
 		parent::setUp();
 
-		$this->model = new BlogsModel();
+		$this->wpdb = Mockery::mock( '\WPDB' );
+
+		$this->blogs = new BlogsModel();
 
 	}
 
@@ -34,16 +37,40 @@ class BlogsModelTest extends WP_UnitTestCase {
 
 		parent::tearDown();
 
-		$this->model = null;
+		$this->blogs = null;
+		
+		Mockery::close();
+		$this->wpdb = null;
 
 	}
 
 	/**
-	 * Test get_blog_ids method when run on a single-site instance.
+	 * Test get_ids method when run on a single-site instance.
 	 *
 	 * @group ModelTests
 	 */
-	function testGetBlogIds() {
-		$this->assertCount( 0, $this->model->get_blog_ids() );
+	function testGetIdsSingleSite() {
+
+		$this->wpdb->shouldReceive( 'get_col' )
+			->with( matchesPattern("/^SELECT blog_id FROM/" ) )
+			->andReturn( [ 1 ] );
+		
+		$this->assertCount( 1, $this->blogs->get_ids( $this->wpdb ) );
+
+	}
+
+	/**
+	 * Test get_ids method when run on a multisite instance.
+	 *
+	 * @group ModelTests
+	 */
+	function testGetIdsMultisite() {
+
+		$this->wpdb->shouldReceive( 'get_col' )
+			->with( matchesPattern( "/^SELECT blog_id FROM/" ) )
+			->andReturn( [ 1, 2 ] );
+		
+		$this->assertCount( 2, $this->blogs->get_ids( $this->wpdb ) );
+
 	}
 }

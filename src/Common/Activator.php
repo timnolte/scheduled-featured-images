@@ -35,7 +35,7 @@ class Activator {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			if ( $network_wide ) {
 					// Get all blog ids.
-					$blog_ids = (new BlogsModel())->get_blog_ids();
+					$blog_ids = (new BlogsModel())->get_ids();
 
 				foreach ( $blog_ids as $blog_id ) {
 					switch_to_blog( $blog_id );
