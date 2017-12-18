@@ -35,11 +35,22 @@ class BlogsModel {
 	 * Get the list of blog ids for network installs.
 	 *
 	 * @since       1.0.0
-	 * @param       \WPDB       $wpdb      An instance of the WordPress core wpdb class, except for unit tests this should be the GLOBAL instance.
+	 * @param       \WPDB $wpdb      An instance of the WordPress core wpdb class, except for unit tests this should be the GLOBAL instance.
 	 * @return      array       Returns an array of blog ids.
 	 */
 	public function get_ids( $wpdb ) {
-		return $wpdb->get_col( "SELECT blog_id FROM {$wpdb->blogs}" );
+		// The wp_blogs table doesn't exist on a single site instance.
+		if ( empty( $wpdb->blogs ) ) {
+			return [];
+		}
+
+		return $wpdb->get_col( $wpdb->prepare( "
+SELECT blog_id 
+FROM {$wpdb->blogs} 
+WHERE archived = %d
+	AND spam = %d
+	AND deleted = %d
+", 0, 0, 0 ) );
 	}
 
 }

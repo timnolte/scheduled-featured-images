@@ -38,7 +38,7 @@ class BlogsModelTest extends WP_UnitTestCase {
 		parent::tearDown();
 
 		$this->blogs = null;
-		
+
 		Mockery::close();
 		$this->wpdb = null;
 
@@ -51,11 +51,15 @@ class BlogsModelTest extends WP_UnitTestCase {
 	 */
 	function testGetIdsSingleSite() {
 
-		$this->wpdb->shouldReceive( 'get_col' )
-			->with( matchesPattern("/^SELECT blog_id FROM/" ) )
-			->andReturn( [ 1 ] );
-		
-		$this->assertCount( 1, $this->blogs->get_ids( $this->wpdb ) );
+		$this->wpdb->shouldReceive( 'blogs' )
+			->andReturn( null );
+
+		$this->assertEmpty( $this->blogs->get_ids( $this->wpdb ) );
+
+		$this->wpdb->shouldReceive( 'blogs' )
+			->andReturn( '' );
+
+		$this->assertEmpty( $this->blogs->get_ids( $this->wpdb ) );
 
 	}
 
@@ -66,11 +70,14 @@ class BlogsModelTest extends WP_UnitTestCase {
 	 */
 	function testGetIdsMultisite() {
 
+		$this->wpdb->shouldReceive( 'blogs' )
+			->andReturn( 'wp_blogs' );
+
 		$this->wpdb->shouldReceive( 'get_col' )
-			->with( matchesPattern( "/^SELECT blog_id FROM/" ) )
+			->with( matchesPattern( '/^SELECT blog_id\s*FROM\s*wp_blogs\s*WHERE.*archived.*spam.*deleted.*/' ) )
 			->andReturn( [ 1, 2 ] );
-		
-		$this->assertCount( 2, $this->blogs->get_ids( $this->wpdb ) );
+
+		$this->assertGreaterThanOrEqual( 2, $this->blogs->get_ids( $this->wpdb ) );
 
 	}
 }
