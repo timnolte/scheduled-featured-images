@@ -84,7 +84,7 @@ class Activator {
 	private static function single_activate( $blog_id = null ) {
 
 		// Switch to another blog/site if a blog_id is passed.
-		if ( !empty( $blog_id ) ) {
+		if ( ! empty( $blog_id ) ) {
 			switch_to_blog( $blog_id );
 		}
 

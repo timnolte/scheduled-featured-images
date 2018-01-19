@@ -1,6 +1,6 @@
 <?php
 /**
- * The standard Domain interface that incorporates much of the 
+ * The standard Domain interface that incorporates much of the
  * database functionality of the plugin.
  *
  * @link       https://www.ndigitals.com/
@@ -25,8 +25,6 @@ interface DomainInterface {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * 
-	 * @param
 	 */
 	public function __construct();
 

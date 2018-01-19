@@ -152,15 +152,15 @@ class Plugin {
 			)
 		);
 	}
-	
+
 	/**
 	 * Magic setter for class properties.
-	 * 
-	 * @since		1.0.0
-	 * 
-	 * @param		string	$name		The name of the class property or setter method.
-	 * @param		mixed		$value	The value to set the class property to or pass to the special setter method.
-	 * @return	boolean		Returns true if value is set, false if not.
+	 *
+	 * @since       1.0.0
+	 *
+	 * @param       string $name       The name of the class property or setter method.
+	 * @param       mixed  $value  The value to set the class property to or pass to the special setter method.
+	 * @return  boolean     Returns true if value is set, false if not.
 	 */
 	public function __set( $name, $value ) {
 
@@ -184,14 +184,14 @@ class Plugin {
 		return true;
 
 	}
-	
+
 	/**
 	 * Magic getter for class properties.
-	 * 
-	 * @since		1.0.0
-	 * 
-	 * @param		string	$name		The name of the class property or setter method.
-	 * @return	mixed		$value	The value the class property, or return value of special getter method.
+	 *
+	 * @since       1.0.0
+	 *
+	 * @param       string $name       The name of the class property or setter method.
+	 * @return  mixed       $value  The value the class property, or return value of special getter method.
 	 */
 	public function __get( $name ) {
 

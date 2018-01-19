@@ -48,13 +48,17 @@ class BlogsModel {
 			return [];
 		}
 
-		return $wpdb->get_col( $wpdb->prepare( "
+		return $wpdb->get_col(
+			$wpdb->prepare(
+				"
 SELECT blog_id 
 FROM {$wpdb->blogs} 
 WHERE archived = %d
 	AND spam = %d
 	AND deleted = %d
-", 0, 0, 0 ) );
+", 0, 0, 0
+			)
+		);
 	}
 
 }
