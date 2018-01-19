@@ -33,14 +33,16 @@ class LoaderTest extends WP_UnitTestCase {
 	 */
 	public function tearDown() {
 
-		parent::tearDown();
-
 		$this->loader = null;
+
+		parent::tearDown();
 
 	}
 
 	/**
 	 * Test plugin loader.
+	 *
+	 * @group LoaderTests
 	 */
 	public function testLoaderIsValidInstance() {
 

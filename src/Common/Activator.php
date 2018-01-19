@@ -39,11 +39,14 @@ class Activator {
 			if ( $network_wide ) {
 
 				// Get all blog ids.
-					$blog_ids = (new BlogsModel())->get_ids( $wpdb );
+				$blog_ids = (new BlogsModel())->get_ids( $wpdb );
 
 				foreach ( $blog_ids as $blog_id ) {
-					self::other_blog_activate( $blog_id );
+					self::single_activate( $blog_id );
 				}
+
+				restore_current_blog();
+
 			} else {
 				self::single_activate();
 			}
@@ -66,7 +69,8 @@ class Activator {
 			return;
 		}
 
-		self::other_blog_activate( $blog_id );
+		self::single_activate( $blog_id );
+		restore_current_blog();
 
 	}
 
@@ -74,34 +78,18 @@ class Activator {
 	 * Fired for each blog when the plugin is activated.
 	 *
 	 * @since    1.0.0
-	 */
-	private static function single_activate() {
-		// TODO: Define activation functionality here.
-		null;
-	}
-
-	/**
-	 * Called when the plugin needs to be activated on a blog/site that is not the active blog/site.
-	 *
-	 * @since     1.0.0
 	 *
 	 * @param     int $blog_id    ID of the blog to switch to and activate on.
 	 */
-	private function other_blog_activate( $blog_id ) {
+	private static function single_activate( $blog_id = null ) {
 
-		// Need to make sure that if no blog_id is passed we simply activate on the current blog/site.
-		if ( empty( $blog_id ) ) {
-
-			self::single_activate();
-
-		} else {
-
+		// Switch to another blog/site if a blog_id is passed.
+		if ( !empty( $blog_id ) ) {
 			switch_to_blog( $blog_id );
-			self::single_activate();
-			restore_current_blog();
-
 		}
 
+		// TODO: Define activation functionality here.
+		null;
 	}
 
 }

@@ -1,21 +1,21 @@
 <?php
 /**
- * Class BlogsModelTest
+ * Class BlogsDomainTest
  *
  * @package NDS\ScheduledFeaturedImages
- * @subpackage NDS\ScheduledFeaturedImages\Tests\Models
+ * @subpackage NDS\ScheduledFeaturedImages\Tests\Domains
  */
 
-namespace NDS\ScheduledFeaturedImages\Models;
+namespace NDS\ScheduledFeaturedImages\Domains;
 
 use PHPUnit\Framework\TestCase;
 use Mockery;
 use WP_UnitTestCase;
 
 /**
- * BlogsModel test case.
+ * BlogsDomain test case.
  */
-class BlogsModelTest extends WP_UnitTestCase {
+class BlogsDomainTest extends WP_UnitTestCase {
 
 	/**
 	 * Test case setup method.
@@ -26,7 +26,7 @@ class BlogsModelTest extends WP_UnitTestCase {
 
 		$this->wpdb = Mockery::mock( '\WPDB' );
 
-		$this->blogs = new BlogsModel();
+		$this->blogs = new BlogsDomain();
 
 	}
 
@@ -35,19 +35,19 @@ class BlogsModelTest extends WP_UnitTestCase {
 	 */
 	public function tearDown() {
 
-		parent::tearDown();
-
 		$this->blogs = null;
 
 		Mockery::close();
 		$this->wpdb = null;
+
+		parent::tearDown();
 
 	}
 
 	/**
 	 * Test get_ids method when run on a single-site instance.
 	 *
-	 * @group ModelTests
+	 * @group DomainTests
 	 */
 	function testGetIdsSingleSite() {
 
@@ -66,7 +66,7 @@ class BlogsModelTest extends WP_UnitTestCase {
 	/**
 	 * Test get_ids method when run on a multisite instance.
 	 *
-	 * @group ModelTests
+	 * @group DomainTests
 	 */
 	function testGetIdsMultisite() {
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ActivatorTest
+ * Class DeactivatorTest
  *
  * @package NDS\ScheduledFeaturedImages
  * @subpackage NDS\ScheduledFeaturedImages\Tests\Common
@@ -14,9 +14,9 @@ use WP_UnitTestCase;
 use NDS\ScheduledFeaturedImages;
 
 /**
- * Activator test case.
+ * Deactivator test case.
  */
-class ActivatorTest extends WP_UnitTestCase {
+class DeactivatorTest extends WP_UnitTestCase {
 
 	/**
 	 * Test case setup method.
@@ -25,7 +25,7 @@ class ActivatorTest extends WP_UnitTestCase {
 
 		parent::setUp();
 
-		$this->activator = new Activator();
+		$this->deactivator = new Deactivator();
 
 	}
 
@@ -34,7 +34,7 @@ class ActivatorTest extends WP_UnitTestCase {
 	 */
 	public function tearDown() {
 
-		$this->activator = null;
+		$this->deactivator = null;
 
 		parent::tearDown();
 
@@ -43,9 +43,9 @@ class ActivatorTest extends WP_UnitTestCase {
 	/**
 	 * A single example test.
 	 *
-	 * @group ActivatorTests
+	 * @group DeactivatorTests
 	 */
-	function testActivateNewSite() {
+	function testPluginDeactivatedState() {
 		// Replace this with some actual testing code.
 		$this->assertTrue( true );
 	}

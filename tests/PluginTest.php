@@ -32,9 +32,9 @@ class PluginTest extends WP_UnitTestCase {
 	 */
 	public function tearDown() {
 
-		parent::tearDown();
-
 		$this->plugin = null;
+
+		parent::tearDown();
 
 	}
 

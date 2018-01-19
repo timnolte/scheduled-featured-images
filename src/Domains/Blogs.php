@@ -38,7 +38,11 @@ class BlogsModel {
 	 * @param       \WPDB $wpdb      An instance of the WordPress core wpdb class, except for unit tests this should be the GLOBAL instance.
 	 * @return      array       Returns an array of blog ids.
 	 */
-	public function get_ids( $wpdb ) {
+	public function get_ids( $wpdb = null ) {
+		if ( is_null( $wpdb ) ) {
+			global $wpdb;
+		}
+
 		// The wp_blogs table doesn't exist on a single site instance.
 		if ( empty( $wpdb->blogs ) ) {
 			return [];

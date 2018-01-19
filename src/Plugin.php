@@ -152,6 +152,64 @@ class Plugin {
 			)
 		);
 	}
+	
+	/**
+	 * Magic setter for class properties.
+	 * 
+	 * @since		1.0.0
+	 * 
+	 * @param		string	$name		The name of the class property or setter method.
+	 * @param		mixed		$value	The value to set the class property to or pass to the special setter method.
+	 * @return	boolean		Returns true if value is set, false if not.
+	 */
+	public function __set( $name, $value ) {
+
+		// If a property requires a special setter use that method.
+		if ( method_exists( $this, 'set_' . $name ) ) {
+
+			$name = 'set_' . $name;
+			$this->$name( $value );
+
+		} elseif ( property_exists( $this, $name ) ) {
+
+			$this->$name = $value;
+
+		} else {
+
+			// Properties are required to be defined, do not create properties on-the-fly.
+			return false;
+
+		}
+
+		return true;
+
+	}
+	
+	/**
+	 * Magic getter for class properties.
+	 * 
+	 * @since		1.0.0
+	 * 
+	 * @param		string	$name		The name of the class property or setter method.
+	 * @return	mixed		$value	The value the class property, or return value of special getter method.
+	 */
+	public function __get( $name ) {
+
+		// If a property requires a special getter use that method.
+		if ( method_exists( $this, 'get_' . $name ) ) {
+
+			$name = 'get_' . $name;
+			return $this->$name();
+
+		} elseif ( property_exists( $this, $name ) ) {
+
+			return $this->$name;
+
+		}
+
+		return null;
+
+	}
 
 	/**
 	 * Define the GLOBAL constants for this plugin.
