@@ -116,8 +116,8 @@ class Plugin {
 
 		$this->plugin_file = $file;
 		$this->plugin_path = trailingslashit( dirname( $this->plugin_file ) );
-		$this->plugin_dir = basename( $this->plugin_path );
-		$this->plugin_url = trailingslashit( str_replace( array( 'http:', 'https:' ), '', trailingslashit( plugins_url() ) . $this->plugin_dir ) );
+		$this->plugin_dir  = basename( $this->plugin_path );
+		$this->plugin_url  = trailingslashit( str_replace( array( 'http:', 'https:' ), '', trailingslashit( plugins_url() ) . $this->plugin_dir ) );
 
 		$this->define_constants();
 
@@ -133,7 +133,7 @@ class Plugin {
 	public function __clone() {
 		wp_die(
 			'Cloning of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array(
-				'response' => 403,
+				'response'  => 403,
 				'back_link' => true,
 			)
 		);
@@ -147,7 +147,7 @@ class Plugin {
 	public function __wakeup() {
 		wp_die(
 			'Unserializing of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array(
-				'response' => 403,
+				'response'  => 403,
 				'back_link' => true,
 			)
 		);

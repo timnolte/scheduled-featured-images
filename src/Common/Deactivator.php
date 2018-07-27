@@ -35,7 +35,7 @@ class Deactivator {
 			if ( $network_wide ) {
 
 				// Get all blog ids.
-				$blog_ids = (new BlogsModel())->get_ids( $wpdb );
+				$blog_ids = ( new BlogsModel() )->get_ids( $wpdb );
 
 				foreach ( $blog_ids as $blog_id ) {
 					self::single_deactivate( $blog_id );
