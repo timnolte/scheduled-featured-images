@@ -132,7 +132,9 @@ class Plugin {
 	 */
 	public function __clone() {
 		wp_die(
-			'Cloning of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array(
+			'Cloning of NDS\ScheduledFeaturedImages\Plugin is forbidden!',
+			'scheduled-featured-images',
+			array(
 				'response'  => 403,
 				'back_link' => true,
 			)
@@ -146,7 +148,9 @@ class Plugin {
 	 */
 	public function __wakeup() {
 		wp_die(
-			'Unserializing of NDS\ScheduledFeaturedImages\Plugin is forbidden!', 'scheduled-featured-images', array(
+			'Unserializing of NDS\ScheduledFeaturedImages\Plugin is forbidden!',
+			'scheduled-featured-images',
+			array(
 				'response'  => 403,
 				'back_link' => true,
 			)

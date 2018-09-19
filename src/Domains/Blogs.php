@@ -56,7 +56,10 @@ FROM {$wpdb->blogs}
 WHERE archived = %d
 	AND spam = %d
 	AND deleted = %d
-", 0, 0, 0
+",
+				0,
+				0,
+				0
 			)
 		);
 	}
